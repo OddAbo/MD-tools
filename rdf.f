@@ -15,7 +15,7 @@
         
         nstep = 10000                      ! takes n steps into account
         ipbc = 0                           ! periodic boundary condition
-        dbox = Rcutoff / Nbox              ! divided Rcut into several boxes
+        dbox = Rcutoff / Nbox              ! divides Rcut into several boxes
         g = 0.                             ! initializes g(r)
         Rcut2 = Rcutoff**2
   
