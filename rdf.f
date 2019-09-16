@@ -46,11 +46,13 @@
               end if pbc
 
               distance = sum(dr**2)
-              if (distance - Rcut2 > 0) cycle part2
-              
-              distance = sqrt(distance)
-              ibox = (distance / dbox)
-              g(ibox) = g(ibox) + 2
+              if (distance - Rcut2 > 0) then
+                cycle part2
+              else
+                distance = sqrt(distance)
+                ibox = (distance / dbox)
+                g(ibox) = g(ibox) + 2
+
             enddo part2
           enddo part1
         enddo
