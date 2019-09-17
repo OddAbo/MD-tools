@@ -13,7 +13,7 @@
         real*8 :: rv(6,Maxatom), dr(3), volume
         real*8 :: distance, g(Nbox), Rcut2, dbox
         
-        nstep = 20000                      ! takes n steps into account
+        nstep = 10000                      ! takes n steps into account
         ipbc = 0                           ! periodic boundary condition
         dbox = Rcutoff / Nbox              ! divides Rcut into several boxes
         g = 0.                             ! initializes g(r)
