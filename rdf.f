@@ -52,7 +52,8 @@
                   distance = sqrt(distance)
                   ibox = (distance / dbox)
                   g(ibox) = g(ibox) + 2
-  
+                end if
+                
               enddo part2
             enddo part1
           enddo
