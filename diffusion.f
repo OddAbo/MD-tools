@@ -8,7 +8,7 @@
       
       implicit none
 
-      integer, parameter :: npart = 13, nstep = 500000
+      integer, parameter :: npart = 13
       real, parameter :: PI = 3.14159265
       real :: msd(2500), vcf(2500), dos(2500), omega(2500)
       real :: t, tau, r2, v2, d_omega
@@ -30,7 +30,7 @@
       dos = 0
       tau = 2.886751346                    ! tau = t_max / sqrt(3)
       omega = 0
-      d_omega = 62.83185307 / 2500.
+      d_omega = 20 * PI / 2500.
       
       whole_file: do while (.true.)
         read(01,end = 999) istep, rv
