@@ -8,7 +8,7 @@
       
       implicit none
 
-      integer, parameter :: npart = 13
+      integer, parameter :: npart = 13, nstep = 500000
       real, parameter :: PI = 3.14159265
       real :: msd(2500), vac(2500), dos(2500), omega(2500)
       real :: t, tau, r2, v2, d_omega
@@ -18,10 +18,8 @@
 
       open(01,file='md.out',form='unformatted',status='unknown')
       open(02,file='dos.dat',form='formatted',status='unknown')
-      open(03,file='new.dat',form='formatted',status='unknown')
       rewind(01)
       rewind(02)
-      rewind(03)
 
       ivac = 1
       idos = 1
