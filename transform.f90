@@ -9,14 +9,28 @@ program transform
   implicit none
   integer, parameter :: natom = 43
   real, parameter :: dt = 0.002
+  logical :: iexist
   integer :: nstep, i, j
   real :: tstart, tend
   real(kind=8) :: rv(6,natom)
 
-  open(01,file="md.out",form="unformatted",status="unknown")
-  open(02,file="md.dat",form="formatted",status="unknown")
-  rewind(01)
-  rewind(02)
+
+  inquire(file="md.out",exist=iexist)
+  if(.not.iexist) then
+    write(*,*) "Error: ""md.out"" doesn't exist!"
+    stop
+  endif
+
+  inquire(file="md.dat",exist=iexist)
+  if(iexist) then
+    write(*,*) "Error: ""md.dat"" already exists!"
+    stop
+  endif
+
+  open(10,file="md.out",form="unformatted",status="old")
+  open(20,file="md.dat", form="formatted",status="new")
+  rewind(10)
+  rewind(20)
 
   write(*,*) "Starts at time(ps):"
   read(*,*) tstart
@@ -28,21 +42,17 @@ program transform
     stop
   endif
   
-  nstep = (tend - tstart) / dt
+  nstep = floor((tend - tstart) / dt)
   
-  skip: do i = 2, tstart/dt
-    read(01)
+  skip: do i = 2, floor(tstart/dt)
+    read(10)
   enddo skip
 
   do i = 0, nstep
-    read(01) j, rv
-    write(02,'(F10.3)') tstart
+    read(10) j, rv
     do j = 1, natom
-      write(02,"(6(SP,F12.6))") rv(1:6,j)
+      write(20,"(6(SP,F12.6))") rv(1:6,j)
     enddo
-    write(02,*) ''
-    tstart = tstart + dt
   enddo
 
 end program transform
-        
