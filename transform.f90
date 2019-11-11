@@ -52,7 +52,9 @@ program transform
     read(10) j, rv
     do j = 1, natom
       write(20,"(6(SP,F12.6))") rv(1:6,j)
+      ! write(20,"(3(SP,F12.6))",advance="no") rv(1:3,j)
     enddo
+    write(20,"")
   enddo
 
 end program transform
