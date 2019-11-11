@@ -48,7 +48,7 @@ program transform
     read(10)
   enddo skip
 
-  do i = 0, nstep
+  do i = 1, nstep
     read(10) j, rv
     do j = 1, natom
       write(20,"(6(SP,F12.6))") rv(1:6,j)
