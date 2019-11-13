@@ -11,9 +11,8 @@ program transform
   real, parameter :: dt = 0.002
   logical :: iexist
   integer :: nstep, i, j
-  real :: tstart, tend
+  real(kind=4) :: tstart, tend
   real(kind=8) :: rv(6,natom)
-
 
   inquire(file="md.out",exist=iexist)
   if(.not.iexist) then
@@ -51,8 +50,9 @@ program transform
   do i = 1, nstep
     read(10) j, rv
     do j = 1, natom
-      write(20,"(6(SP,F12.6))") rv(1:6,j)
-      ! write(20,"(3(SP,F12.6))",advance="no") rv(1:3,j)
+      write(20,"(6(sp,f12.6))") rv(1:6,j)
+      ! or:
+      ! write(20,"(3(sp,f12.6))",advance="no") rv(1:3,j)
     enddo
     write(20,*)
   enddo
