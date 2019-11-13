@@ -11,8 +11,8 @@ program diffusion
   real, parameter :: dt = 0.002, PI = 3.14159265, tau = 2.886751346
   logical :: iexist
   integer :: istep, iatom, iread, i, j
-  real :: msd(2500), vac(2500), dos(2500), omega(2500)
-  real :: t, d_omega
+  real(kind=4) :: msd(2500), vac(2500), dos(2500), omega(2500)
+  real(kind=4) :: t, d_omega
   real(kind=8) :: rv(6,natom), rv_new(6,natom)
 
   inquire(file="md.out",exist=iexist)
@@ -41,18 +41,14 @@ program diffusion
 
   do while (iread==0)
     read(10,iostat=iread) istep, rv
-
     do i = 2, 2500
       read(10,iostat=iread) istep, rv_new
       msd(i) = msd(i) + sum((rv(1:3,:) - rv_new(1:3,:))**2)
-
       do iatom = 1, natom
         vac(i) = vac(i) + &
         sum(rv(4:6,iatom)*rv_new(4:6,iatom)) / sum(rv(4:6,iatom)**2)
       enddo
-
     enddo
-
   enddo
 
   msd = msd / float(nstep * natom) * 2500.
@@ -68,7 +64,7 @@ program diffusion
   enddo
 
   do i = 1, 2500
-    write(20,"(6(F12.6))") &
+    write(20,"(6(f12.6))") &
     i*0.002, msd(i), i*0.002, vac(i), i*d_omega/PI/2., omega(i)
   enddo
 
