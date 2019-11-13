@@ -40,10 +40,10 @@ program main
     cal: do j = 1, 50000
       msd_tot = 0
 
-      every: do k = 1, natom
+      all_atom: do k = 1, natom
         msd(k) = sum((r(1:3,j,k) - r(1:3,j+2500,k))**2)
         msd_tot = msd_tot + msd(k)
-      enddo every
+      enddo all_atom
       msd_tot = sqrt(msd_tot/float(natom))
       
       t = t + 1
