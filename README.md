@@ -1,2 +1,2 @@
-# Share little tools for MD analysing
+# Little tools for MD analysing
 
