@@ -47,7 +47,7 @@ program rdf
   skip: do i = 2, floor(tstart/dt)
     read(10)
   enddo skip
-  
+
   do i = 1, nstep
     read(10) istep, rv
 
@@ -70,7 +70,7 @@ program rdf
     enddo atom1
   enddo
 
-  do i = 1, ngr
+  do i = 1, ngr-1
     vgr = ((i+1)**3 - i**3) * dgr**3
     g(i) = g(i) / (natom*nstep*vgr)
     write(20,"(2(f10.3))") (i+0.5)*dgr, g(i)
