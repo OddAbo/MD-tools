@@ -1,7 +1,7 @@
 ! 2019-11-09 by Dianmo
 ! 
 ! This small program calculates:
-! diffusion coefficient,
+! mean-squared displacement,
 ! velocity auto-correlation funciton
 ! and phonon density of state.
 
@@ -31,7 +31,7 @@ program diffusion
   open(20,file="diff.dat", form="formatted",status="new")
   rewind(10)
   rewind(20)
-  write(20,*) "t    diff    t    vac    omega    dos"
+  write(20,*) "t    msd    t    vac    omega    dos"
   msd = 0
   vac = 0
   dos = 0
