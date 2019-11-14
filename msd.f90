@@ -2,14 +2,14 @@
 ! 
 ! mean-squared displacement
 
-program main
+program msd
   implicit none
   logical :: iexist
   integer, parameter :: natom = 43, nstep = 1000000
   real, parameter :: dt = 0.002
   integer :: istep, i, j, k, t
   real(kind=8) :: rv(6,natom), r(3,52500,natom)
-  real(kind=4) :: msd(natom), msd_tot
+  real(kind=4) :: dr2(natom), msd_tot
 
   t = 2500
 
@@ -41,16 +41,17 @@ program main
       msd_tot = 0
 
       all_atom: do k = 1, natom
-        msd(k) = sum((r(1:3,j,k) - r(1:3,j+2500,k))**2)
-        msd_tot = msd_tot + msd(k)
+        dr2(k) = sum((r(1:3,j,k) - r(1:3,j+2500,k))**2)
+        msd_tot = msd_tot + dr2(k)
       enddo all_atom
+
       msd_tot = sqrt(msd_tot/float(natom))
-      
       t = t + 1
+      
       write(20,"(f12.3)",advance="no") t*dt
       ! outputs msd of all atoms:
       ! do k = 1, natom
-      !   write(20,"(F12.6)",advance="no") msd(k)
+      !   write(20,"(f12.6)",advance="no") dr2(k)
       ! enddo
       write(20,"(f12.6)") msd_tot
     enddo cal
@@ -61,4 +62,4 @@ program main
 
   enddo divide
 
-end program main
+end program msd
