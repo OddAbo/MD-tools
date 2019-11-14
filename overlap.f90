@@ -76,6 +76,7 @@ program overlap
     all_atom: do i = 1, natom
       overlap1: if (dist2(i,i) < rcut2) then
         q1 = q1 + 1
+        q2 = q2 + 1
         cycle all_atom
       endif overlap1
 
