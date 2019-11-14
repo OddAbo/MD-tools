@@ -1,8 +1,8 @@
 ! 2019-11-13 by Dianmo
 ! 
-! mean-squared displacement
+! Euclidean distance
 
-program msd
+program eudist
   implicit none
   logical :: iexist
   integer, parameter :: natom = 43, nstep = 1000000
@@ -60,4 +60,4 @@ program msd
       backspace (10)
     enddo back
   enddo divide
-end program msd
+end program eudist
