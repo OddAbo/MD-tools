@@ -9,7 +9,7 @@ program eudist
   real, parameter :: dt = 0.002
   integer :: istep, i, j, k, t
   real(kind=8) :: rv(6,natom), r(3,52500,natom)
-  real(kind=4) :: dr2(natom), msd_tot
+  real(kind=8) :: dr2(natom), msd_tot
 
   t = 2500
 
