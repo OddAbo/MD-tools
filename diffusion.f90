@@ -4,6 +4,8 @@
 ! mean-squared displacement,
 ! velocity auto-correlation funciton
 ! and phonon density of state.
+!
+! See more in ./reference/VAC.pdf
 
 program diffusion
   implicit none
