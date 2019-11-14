@@ -9,7 +9,7 @@ program rdf
   logical :: iexist
   integer :: nstep, istep, igr, tstart, tend, i, j, k
   real(kind=8) :: rv(6,natom)
-  real(kind=4) :: dgr, dr(3), dist, rcut2, g(ngr), vgr
+  real(kind=8) :: dgr, dr(3), dist, rcut2, g(ngr), vgr
 
   dgr =  0.5 * box / ngr
   g = 0
