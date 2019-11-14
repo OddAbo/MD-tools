@@ -11,8 +11,8 @@ program diffusion
   real, parameter :: dt = 0.002, PI = 3.14159265, tau = 2.886751346
   logical :: iexist
   integer :: istep, iatom, iread, i, j
-  real(kind=4) :: msd(2500), vac(2500), dos(2500), omega(2500)
-  real(kind=4) :: t, d_omega
+  real(kind=8) :: msd(2500), vac(2500), dos(2500), omega(2500)
+  real(kind=8) :: t, d_omega
   real(kind=8) :: rv(6,natom), rv_new(6,natom)
 
   inquire(file="md.out",exist=iexist)
