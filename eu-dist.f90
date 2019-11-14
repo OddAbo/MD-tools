@@ -19,14 +19,14 @@ program msd
     stop
   endif
 
-  inquire(file="msd.dat",exist=iexist)
+  inquire(file="eud.dat",exist=iexist)
   if(iexist) then
-    write(*,*) "Error: ""msd.dat"" already exists!"
+    write(*,*) "Error: ""eud.dat"" already exists!"
     stop
   endif
   
   open(10,file="md.out",form="unformatted",status="old")
-  open(20,file="msd.dat",form="formatted",status="new")
+  open(20,file="eud.dat",form="formatted",status="new")
   rewind(10)
   rewind(20)
 
