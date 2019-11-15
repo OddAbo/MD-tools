@@ -23,8 +23,7 @@ program transform
   if(iexist) then
     write(*,*) "Error: ""md.dat"" already exists!"
     write(*,*) &
-    "To avoid overwriting the original file, please rename or&
-     & remove it before running this program again."
+    "Rename or remove it before running this program again."
     stop
   endif
 
