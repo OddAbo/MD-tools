@@ -11,9 +11,9 @@ program overlap
   integer, parameter :: natom = 43, nblock = 100
   real, parameter :: dt = 0.002
   logical :: iexist
-  integer :: istep, iread, i, j, q1, q2
+  integer :: istep, iread, i, j, t, q1, q2
   real(kind=8) :: rv(6,natom), pos_ref(3,natom), pos_new(3,natom)
-  real(kind=8) :: dist2(natom,natom), r1, rcut2, t
+  real(kind=8) :: dist2(natom,natom), r1, rcut2, t_ref
 
   inquire(file="md.out",exist=iexist)
   if(.not.iexist) then
@@ -36,12 +36,12 @@ program overlap
   rewind(20)
 
   write(*,*) "Time of reference structure: (ps)"
-  read(*,*) t
+  read(*,*) t_ref
   
   ! r1: radius of the first peak in rdf
   r1 = 2.7
   iread = 0
-  istep = int(t / dt)
+  istep = int(t_ref / dt)
   pos_ref = 0
   rcut2 = (0.333333 * r1) ** 2
   
@@ -68,7 +68,6 @@ program overlap
       pos_new = pos_new + rv(1:3,1:natom)
     enddo new_struc
     pos_new = pos_new / float(nblock)
-    t = t + nblock
 
     distance: do i = 1, natom
       do j = 1, natom
@@ -91,7 +90,8 @@ program overlap
         endif
       enddo overlap2
     enddo all_atom
-
+    
+    t = t + nblock
     write(20,"(3(f10.3))") t*dt, q1/float(natom), q2/float(natom)
 
   enddo
