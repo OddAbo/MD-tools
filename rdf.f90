@@ -24,6 +24,9 @@ program rdf
   inquire(file="rdf.dat",exist=iexist)
   if(iexist) then
     write(*,*) "Error: ""rdf.dat"" already exists!"
+    write(*,*) &
+    "To avoid overwriting the original file, please rename or&
+     & remove it before running this program again."
     stop
   endif
   
