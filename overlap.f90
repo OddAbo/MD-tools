@@ -24,6 +24,9 @@ program overlap
   inquire(file="overlap.dat",exist=iexist)
   if(iexist) then
     write(*,*) "Error: ""overlap.dat"" already exists!"
+    write(*,*) &
+    "To avoid overwriting the original file, please rename or&
+     & remove it before running this program again."
     stop
   endif
   
