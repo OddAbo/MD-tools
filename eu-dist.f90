@@ -22,8 +22,7 @@ program eudist
   inquire(file="eud.dat",exist=iexist)
   if(iexist) then
     write(*,*) "Error: ""eud.dat"" already exists!"
-    write(*,*) &
-    "Rename or remove it before running this program again."
+    write(*,*) "Rename or remove it before running this program again."
     stop
   endif
   
