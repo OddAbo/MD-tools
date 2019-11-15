@@ -11,8 +11,7 @@ program transform
   real, parameter :: dt = 0.002
   logical :: iexist
   integer :: nstep, i, j
-  real(kind=4) :: tstart, tend
-  real(kind=8) :: rv(6,natom)
+  real(kind=8) :: rv(6,natom), tstart, tend
 
   inquire(file="md.out",exist=iexist)
   if(.not.iexist) then
@@ -23,6 +22,9 @@ program transform
   inquire(file="md.dat",exist=iexist)
   if(iexist) then
     write(*,*) "Error: ""md.dat"" already exists!"
+    write(*,*) &
+    "To avoid overwriting the original file, please rename or&
+     & remove it before running this program again."
     stop
   endif
 
