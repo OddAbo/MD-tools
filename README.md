@@ -1,8 +1,10 @@
 # Little tools for MD analyzing
 ---
-**To avoid overwriting the original file due to misoperation, almost all program would require to rename or remove it before running again.**
+**To avoid overwriting the original file due to misoperation, almost all 
+program would require to rename or remove it before running again.**
 
-You might need to make a little change to original code, like the shape of array **rv**
+You might need to make a little change to original code, like the shape of 
+array **rv**
 ```
 real(kind=8) :: rv(6,natom)
 ```
@@ -31,7 +33,7 @@ plot 'overlap.dat' u 1:3 w l        # Q2
 ---
 ## [rdf.f90](https://github.com/OddAbo/MD-tools/blob/master/rdf.f90)
 
-**You might need to make a little change to PBC part if necessary**
+You might need to make a little change to **PBC** part if necessary
 ```
 plot 'rdf.dat' u 1:2 w l        # radial distribution function
 ```
@@ -39,7 +41,8 @@ plot 'rdf.dat' u 1:2 w l        # radial distribution function
 ---
 ## [transform.f90](https://github.com/OddAbo/MD-tools/blob/master/transform.f90)
 
-**Transform specific fragment of data in the unformatted file "md.out" into formatted file "md.dat"**
+Transform specific fragment of data in the unformatted file **"md.out"** into 
+formatted file **"md.dat"**
 ```
 Starts at time(ps):
 20
