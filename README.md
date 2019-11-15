@@ -1,7 +1,7 @@
 # Little tools for MD analysing
 
 ## diffusion.f90:
-### mean-squared displacement
+> mean-squared displacement
 `plot 'diff.dat' u 1:2 w l`
 
 `plot 'diff.dat' u 3:4 w l        # velocity auto-correlation function`
