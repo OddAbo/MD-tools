@@ -51,12 +51,12 @@ program eudist
       msd_tot = sqrt(msd_tot/float(natom))
       t = t + 1
       
-      write(20,"(f12.3)",advance="no") t*dt
+      write(20,"(f8.3)",advance="no") t*dt
       ! outputs msd of all atoms:
       ! do k = 1, natom
-      !   write(20,"(f12.6)",advance="no") dr2(k)
+      !   write(20,"(f10.6)",advance="no") dr2(k)
       ! enddo
-      write(20,"(f12.6)") msd_tot
+      write(20,"(f10.6)") msd_tot
     enddo cal
 
     back: do j = 1, 2500
