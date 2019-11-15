@@ -1,4 +1,4 @@
-# Little tools for MD analysing
+# Little tools for MD analyzing
 ---
 **To avoid overwriting the original file, almost all program would require to rename or remove it before running again.**
 
