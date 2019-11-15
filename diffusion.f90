@@ -26,6 +26,9 @@ program diffusion
   inquire(file="diff.dat",exist=iexist)
   if(iexist) then
     write(*,*) "Error: ""diff.dat"" already exists!"
+    write(*,*) &
+    "To avoid overwriting the original file, please rename or&
+     & remove it before running this program again."
     stop
   endif
 
