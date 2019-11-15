@@ -1,6 +1,6 @@
 # Little tools for MD analysing
 
-## diffusion.f90:
+## [diffusion.f90](https://github.com/OddAbo/MD-tools/blob/master/diffusion.f90)
 `plot 'diff.dat' u 1:2 w l`
 \t  mean-squared displacement
 
