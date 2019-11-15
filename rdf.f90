@@ -5,7 +5,7 @@
 program rdf
   implicit none
   real, parameter :: dt = 0.002, box = 20
-  integer, parameter :: natom = 43, ngr = 200
+  integer, parameter :: natom = 43, ngr = 300
   logical :: iexist
   integer :: nstep, istep, igr, tstart, tend, i, j, k
   real(kind=8) :: rv(6,natom)
