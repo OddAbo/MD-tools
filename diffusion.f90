@@ -12,7 +12,7 @@ program diffusion
   integer, parameter :: natom = 43, nstep = 2000000
   real, parameter :: dt = 0.002, PI = 3.14159265, tau = 2.886751346
   logical :: iexist
-  integer :: istep, iatom, iread, i, j
+  integer :: istep, iatom, iend, i, j
   real(kind=8) :: msd(2500), vac(2500), dos(2500), omega(2500)
   real(kind=8) :: t, d_omega
   real(kind=8) :: rv(6,natom), rv_new(6,natom)
@@ -39,13 +39,15 @@ program diffusion
   vac = 0
   dos = 0
   omega = 0
-  iread = 0
+  iend = 0
   d_omega = 20 * PI / 2500.
 
-  do while (iread==0)
-    read(10,iostat=iread) istep, rv
+  do while (.true.)
+    read(10,iostat=iend) istep, rv
+    if(is_iostat_end(iend)) stop
     do i = 2, 2500
-      read(10,iostat=iread) istep, rv_new
+      read(10,iostat=iend) istep, rv_new
+      if(is_iostat_end(iend)) stop
       msd(i) = msd(i) + sum((rv(1:3,:) - rv_new(1:3,:))**2)
       do iatom = 1, natom
         vac(i) = vac(i) + &
