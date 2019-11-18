@@ -15,14 +15,13 @@ program transform
 
   inquire(file="md.out",exist=iexist)
   if(.not.iexist) then
-    write(*,*) "Error: ""md.out"" doesn't exist!"
-    stop
+    stop "Error: ""md.out"" doesn't exist!"
   endif
 
   inquire(file="md.dat",exist=iexist)
   if(iexist) then
-    write(*,*) "Error: ""md.dat"" already exists!"
-    write(*,*) "Rename or remove it before running this program again."
+    stop "Error: ""md.dat"" already exists!&
+    & Rename or remove it before running this program again."
     stop
   endif
 

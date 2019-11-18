@@ -19,14 +19,13 @@ program diffusion
 
   inquire(file="md.out",exist=iexist)
   if(.not.iexist) then
-    write(*,*) "Error: ""md.out"" doesn't exist!"
-    stop
+    stop "Error: ""md.out"" doesn't exist!"
   endif
 
   inquire(file="diff.dat",exist=iexist)
   if(iexist) then
-    write(*,*) "Error: ""diff.dat"" already exists!"
-    write(*,*) "Rename or remove it before running this program again."
+    stop "Error: ""diff.dat"" already exists!&
+    & Rename or remove it before running this program again."
     stop
   endif
 

@@ -17,15 +17,13 @@ program overlap
 
   inquire(file="md.out",exist=iexist)
   if(.not.iexist) then
-    write(*,*) "Error: ""md.out"" doesn't exist!"
-    stop
+    stop "Error: ""md.out"" doesn't exist!"
   endif
 
   inquire(file="overlap.dat",exist=iexist)
   if(iexist) then
-    write(*,*) "Error: ""overlap.dat"" already exists!"
-    write(*,*) "Rename or remove it before running this program again."
-    stop
+    stop "Error: ""overlap.dat"" already exists!&
+    & Rename or remove it before running this program again."
   endif
   
   open(10,file="md.out",form="unformatted",status="old")
