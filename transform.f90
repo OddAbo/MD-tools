@@ -22,7 +22,6 @@ program transform
   if(iexist) then
     stop "Error: ""md.dat"" already exists!&
     & Rename or remove it before running this program again."
-    stop
   endif
 
   open(10,file="md.out",form="unformatted",status="old")
