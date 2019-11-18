@@ -4,7 +4,7 @@
 
 program rdf
   implicit none
-  real, parameter :: dt = 0.002, box = 20
+  real, parameter :: dt = 0.002, box = 20, pi = 3.1415926
   integer, parameter :: natom = 43, ngr = 300
   logical :: iexist
   integer :: nstep, istep, igr, tstart, tend, i, j, k
@@ -70,7 +70,7 @@ program rdf
   enddo
 
   do i = 1, ngr-1
-    vgr = ((i+1)**3 - i**3) * dgr**3
+    vgr = ((i+1)**3 - i**3) * dgr**3 * (4 * pi) / 3.
     g(i) = g(i) / (natom*nstep*vgr)
     write(20,"(2(f10.3))") (i+0.5)*dgr, g(i)
   enddo
