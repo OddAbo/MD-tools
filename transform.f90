@@ -48,9 +48,9 @@ program transform
   do i = 1, nstep
     read(10) j, rv
     do j = 1, natom
-      ! write(20,"(6(sp,f12.6))") rv(1:6,j)
+      write(20,"(6(sp,f12.6))") rv(1:6,j)
       ! or save position only:
-      write(20,"(3(sp,f12.6))",advance="no") rv(1:3,j)
+      ! write(20,"(3(sp,f12.6))",advance="no") rv(1:3,j)
     enddo
     write(20,*)
   enddo
