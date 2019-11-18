@@ -5,9 +5,9 @@
 program eudist
   implicit none
   logical :: iexist
-  integer, parameter :: natom = 43, nstep = 1000000
+  integer, parameter :: natom = 43!, nstep = 2000000
   real, parameter :: dt = 0.002
-  integer :: istep, i, j, k, t
+  integer :: iend, istep, i, j, k, t
   real(kind=8) :: rv(6,natom), r(3,52500,natom)
   real(kind=8) :: dr2(natom), msd_tot
 
@@ -31,10 +31,12 @@ program eudist
   rewind(10)
   rewind(20)
 
-  divide: do i = 1, (nstep-2500)/50000
+  divide: do while (.true.)
+  ! i = 1, (nstep-2500)/50000
 
     store: do j = 1, 52500
-      read(10) istep, rv
+      read(10,iostat=iend) istep, rv
+      if(is_iostat_end(iend)) stop
       r(1:3,j,1:natom) = rv(1:3,1:natom)
     enddo store
 
@@ -60,5 +62,7 @@ program eudist
     back: do j = 1, 2500
       backspace (10)
     enddo back
+
   enddo divide
+
 end program eudist
