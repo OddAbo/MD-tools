@@ -18,16 +18,16 @@ program transform
     stop "Error: ""md.out"" doesn't exist!"
   endif
 
-  inquire(file="md.dat",exist=iexist)
-  if(iexist) then
-    stop "Error: ""md.dat"" already exists!&
-    & Rename or remove it before running this program again."
-  endif
+  ! inquire(file="md.dat",exist=iexist)
+  ! if(iexist) then
+  !   stop "Error: ""md.dat"" already exists!&
+  !   & Rename or remove it before running this program again."
+  ! endif
 
   open(10,file="md.out",form="unformatted",status="old")
-  open(20,file="md.dat", form="formatted",status="new")
+  open(20,file="md.dat", form="formatted",status="old")
   rewind(10)
-  rewind(20)
+  ! rewind(20)
 
   write(*,*) "Starts at time(ps):"
   read(*,*) tstart
@@ -48,9 +48,9 @@ program transform
   do i = 1, nstep
     read(10) j, rv
     do j = 1, natom
-      write(20,"(6(sp,f12.6))") rv(1:6,j)
+      ! write(20,"(6(sp,f12.6))") rv(1:6,j)
       ! or save position only:
-      ! write(20,"(3(sp,f12.6))",advance="no") rv(1:3,j)
+      write(20,"(3(sp,f12.6))",advance="no") rv(1:3,j)
     enddo
     write(20,*)
   enddo

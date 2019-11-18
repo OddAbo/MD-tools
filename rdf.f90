@@ -8,9 +8,11 @@ program rdf
   integer, parameter :: natom = 43, ngr = 300
   logical :: iexist
   integer :: nstep, istep, igr, tstart, tend, i, j, k
-  real(kind=8) :: rv(6,natom)
+  real(kind=8) :: rv(6,natom), rho, l_box
   real(kind=8) :: dgr, dr(3), dist, rcut2, g(ngr), vgr
 
+  l_box = 1.
+  rho = float(natom) / l_box**3
   dgr =  0.5 * box / ngr
   g = 0
   rcut2 = (box/2) ** 2
@@ -69,10 +71,13 @@ program rdf
     enddo atom1
   enddo
 
-  do i = 1, ngr-1
-    vgr = ((i+1)**3 - i**3) * dgr**3 * (4 * pi) / 3.
-    g(i) = g(i) / (natom*nstep*vgr)
-    write(20,"(2(f10.3))") (i+0.5)*dgr, g(i)
+  ! Attention !
+  ! To cluster, density-based correction couldn't be made 
+  ! due its irregular shape.
+  do i = 1, ngr
+    vgr = (4 * pi) / 3. * ((i+1)**3 - i**3) * dgr**3
+    g(i) = g(i) / (natom * nstep * vgr * rho)
+    write(20,"(2(f10.6))") (i-0.5)*dgr, g(i)
   enddo
 
 end program rdf
