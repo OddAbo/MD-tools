@@ -51,7 +51,7 @@ program transform
     read(10) j, rv
     do j = 1, natom
       write(20,"(6(sp,f12.6))") rv(1:6,j)
-      ! or:
+      ! or save position only:
       ! write(20,"(3(sp,f12.6))",advance="no") rv(1:3,j)
     enddo
     write(20,*)
