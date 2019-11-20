@@ -9,7 +9,7 @@
 
 program diffusion
   implicit none
-  integer, parameter :: natom = 43, nstep = 2000000
+  integer, parameter :: natom = 43
   real, parameter :: dt = 0.002, PI = 3.14159265, tau = 2.886751346
   logical :: iexist
   integer :: istep, iatom, iend, i, j
@@ -34,6 +34,7 @@ program diffusion
   rewind(10)
   rewind(20)
   write(20,*) "t    msd    t    vac    omega    dos"
+  j = 0
   msd = 0
   vac = 0
   dos = 0
@@ -41,22 +42,24 @@ program diffusion
   iend = 0
   d_omega = 20 * PI / 2500.
 
-  do while (.true.)
+  loop: do while (.true.)
     read(10,iostat=iend) istep, rv
-    if(is_iostat_end(iend)) stop
+    if(is_iostat_end(iend)) exit loop
+    j = j + 1
     do i = 2, 2500
       read(10,iostat=iend) istep, rv_new
-      if(is_iostat_end(iend)) stop
-      msd(i) = msd(i) + sum((rv(1:3,:) - rv_new(1:3,:))**2)
+      if(is_iostat_end(iend)) exit loop
+      j = j + 1
+      msd(i) = msd(i) + sum((rv(1:3,1:natom) - rv_new(1:3,1:natom))**2)
       do iatom = 1, natom
         vac(i) = vac(i) + &
         sum(rv(4:6,iatom)*rv_new(4:6,iatom)) / sum(rv(4:6,iatom)**2)
       enddo
     enddo
-  enddo
+  enddo loop
 
-  msd = msd / float(nstep * natom) * 2500.
-  vac = vac / float(nstep * natom) * 2500.
+  msd = msd / float(j * natom) * 2500.
+  vac = vac / float(j * natom) * 2500.
   vac(1) = 1
   
   do i = 1, 2500
