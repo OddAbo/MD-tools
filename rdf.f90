@@ -8,11 +8,10 @@ program rdf
   integer, parameter :: natom = 43, ngr = 300
   logical :: iexist
   integer :: nstep, istep, igr, tstart, tend, i, j, k
-  real(kind=8) :: rv(6,natom), rho, l_box
+  real(kind=8) :: rv(6,natom), rho
   real(kind=8) :: dgr, dr(3), dist, rcut2, g(ngr), vgr
 
-  l_box = 10.
-  rho = float(natom) / l_box**3
+  rho = float(natom) / (0.5*box)**3
   dgr =  0.5 * box / ngr
   g = 0
   rcut2 = (box/2) ** 2
