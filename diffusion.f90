@@ -44,11 +44,11 @@ program diffusion
 
   loop: do while (.true.)
     read(10,iostat=iend) istep, rv
-    if(is_iostat_end(iend)) exit loop
+    if (is_iostat_end(iend)) exit loop
     j = j + 1
     do i = 2, 2500
       read(10,iostat=iend) istep, rv_new
-      if(is_iostat_end(iend)) exit loop
+      if (is_iostat_end(iend)) exit loop
       j = j + 1
       msd(i) = msd(i) + sum((rv(1:3,1:natom) - rv_new(1:3,1:natom))**2)
       do iatom = 1, natom
