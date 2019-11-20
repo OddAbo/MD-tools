@@ -46,20 +46,27 @@ program diffusion
     read(10,iostat=iend) istep, rv
     if (is_iostat_end(iend)) exit loop
     j = j + 1
+    
     do i = 2, 2500
       read(10,iostat=iend) istep, rv_new
       if (is_iostat_end(iend)) exit loop
       j = j + 1
       msd(i) = msd(i) + sum((rv(1:3,1:natom) - rv_new(1:3,1:natom))**2)
+    
       do iatom = 1, natom
         vac(i) = vac(i) + &
         sum(rv(4:6,iatom)*rv_new(4:6,iatom)) / sum(rv(4:6,iatom)**2)
       enddo
     enddo
+
+    skip: do i = 1, 2500
+      read(10,iostat=iend)
+      if (is_iostat_end(iend)) exit loop
+    enddo skip
   enddo loop
 
-  msd = msd / float(j * natom) * 2500.
-  vac = vac / float(j * natom) * 2500.
+  msd = msd / float(j * natom) * 2499.
+  vac = vac / float(j * natom) * 2499.
   vac(1) = 1
   
   do i = 1, 2500
