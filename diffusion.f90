@@ -12,9 +12,9 @@ program diffusion
   integer, parameter :: natom = 43
   real, parameter :: dt = 0.002, PI = 3.14159265, tau = 2.886751346
   logical :: iexist
-  integer :: istep, iatom, iend, i, j, icount1, icount2
+  integer :: istep, iatom, iend, i, j
   real(kind=8) :: msd(2500), vac(2500), dos(2500), omega(2500)
-  real(kind=8) :: t, d_omega
+  real(kind=8) :: t, d_omega, f_vac
   real(kind=8) :: rv(6,natom), rv_new(6,natom)
 
   inquire(file="md.out",exist=iexist)
@@ -35,31 +35,33 @@ program diffusion
   rewind(20)
   write(20,*) "t    msd    t    vac    omega    dos"
 
-  icount1 = 0
+  j = 0
   msd = 0
   vac = 0
   dos = 0
   omega = 0
   iend = 0
-  d_omega = 20 * PI / 2500.
+  d_omega = 28 * PI / 2500.
   
   loop: do while (.true.)
     read(10,iostat=iend) istep, rv
     if (is_iostat_end(iend)) exit loop
-    icount2 = 0
     
-    do i = 2, 2500
+    do i = 1, 2500
       read(10,iostat=iend) istep, rv_new
       if (is_iostat_end(iend)) exit loop
-      icount2 = icount2 + 1
-      msd(i) = msd(i) + sum((rv(1:3,1:natom) - rv_new(1:3,1:natom))**2)
-    
+
+      do iatom = 1, natom
+        msd(i) = msd(i) + &
+        sum((rv(1:3,iatom) - rv_new(1:3,iatom))**2)
+      enddo
+
       do iatom = 1, natom
         vac(i) = vac(i) + &
         sum(rv(4:6,iatom)*rv_new(4:6,iatom)) / sum(rv(4:6,iatom)**2)
       enddo
     enddo
-    icount1 = icount1 + 1
+    j = j + 1
     
     skip: do i = 1, 2500
       read(10,iostat=iend)
@@ -67,20 +69,19 @@ program diffusion
     enddo skip
   enddo loop
 
-  msd = msd / (icount2 + (icount1-1)*float(natom))
-  vac = vac / (icount2 + (icount1-1)*float(natom))
-  vac(1) = 1
+  msd = msd / float(j * natom)
+  vac = vac / float(j * natom)
   
   do i = 1, 2500
     do j = 1, 2500
       t = j * dt
       omega(i) = omega(i) + &
-      0.004 * vac(j) * exp(-(t/tau)**2) * cos(i*d_omega*t)
+      2 * vac(j) * exp(-(t/tau)**2) * cos(i*d_omega*t) * dt
     enddo
   enddo
 
   do i = 1, 2500
-    write(20,"(3(f8.3,f12.6))") &
+    write(20,"(3(f8.3,f12.8))") &
     i*0.002, msd(i), i*0.002, vac(i), i*d_omega/PI/2., omega(i)
   enddo
 
