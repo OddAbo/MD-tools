@@ -12,7 +12,7 @@ program diffusion
   integer, parameter :: natom = 43
   real, parameter :: dt = 0.002, PI = 3.14159265, tau = 2.886751346
   logical :: iexist
-  integer :: istep, iatom, iend, i, j
+  integer :: istep, iatom, iend, i, j, icount1, icount2
   real(kind=8) :: msd(2500), vac(2500), dos(2500), omega(2500)
   real(kind=8) :: t, d_omega
   real(kind=8) :: rv(6,natom), rv_new(6,natom)
@@ -34,23 +34,24 @@ program diffusion
   rewind(10)
   rewind(20)
   write(20,*) "t    msd    t    vac    omega    dos"
-  j = 0
+
+  icount1 = 0
   msd = 0
   vac = 0
   dos = 0
   omega = 0
   iend = 0
   d_omega = 20 * PI / 2500.
-
+  
   loop: do while (.true.)
     read(10,iostat=iend) istep, rv
     if (is_iostat_end(iend)) exit loop
-    j = j + 1
+    icount2 = 0
     
     do i = 2, 2500
       read(10,iostat=iend) istep, rv_new
       if (is_iostat_end(iend)) exit loop
-      j = j + 1
+      icount2 = icount2 + 1
       msd(i) = msd(i) + sum((rv(1:3,1:natom) - rv_new(1:3,1:natom))**2)
     
       do iatom = 1, natom
@@ -58,15 +59,16 @@ program diffusion
         sum(rv(4:6,iatom)*rv_new(4:6,iatom)) / sum(rv(4:6,iatom)**2)
       enddo
     enddo
-
+    icount1 = icount1 + 1
+    
     skip: do i = 1, 2500
       read(10,iostat=iend)
       if (is_iostat_end(iend)) exit loop
     enddo skip
   enddo loop
 
-  msd = msd / float(j * natom) * 2499.
-  vac = vac / float(j * natom) * 2499.
+  msd = msd / (icount2 + (icount1-1)*float(natom))
+  vac = vac / (icount2 + (icount1-1)*float(natom))
   vac(1) = 1
   
   do i = 1, 2500
