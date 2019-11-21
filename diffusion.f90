@@ -83,7 +83,7 @@ program diffusion
 
   do i = 1, 2500
     write(20,"(3(f8.3,f12.8))") &
-    (i-1)*0.002, msd(i), (i-1)*0.002, vac(i), (i-1)*d_omega/PI/2., omega(i)
+    (i-1)*0.002, msd(i), (i-1)*0.002, vac(i), i*d_omega/PI/2., omega(i)
   enddo
 
 end program diffusion
