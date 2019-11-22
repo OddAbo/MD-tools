@@ -7,7 +7,7 @@ program eudist
   logical :: iexist
   integer, parameter :: natom = 43
   real, parameter :: dt = 0.002
-  integer :: iend, istep, i, j, k, t
+  integer :: iend, istep, i, j, t
   real(kind=8) :: rv(6,natom), r(3,52500,natom)
   real(kind=8) :: dr2(natom), dr_bar
 
@@ -31,18 +31,18 @@ program eudist
 
   divide: do while (.true.)
 
-    store: do j = 1, 52500
+    store: do i = 1, 52500
       read(10,iostat=iend) istep, rv
       if(is_iostat_end(iend)) stop
-      r(1:3,j,1:natom) = rv(1:3,1:natom)
+      r(1:3,i,1:natom) = rv(1:3,1:natom)
     enddo store
 
-    cal: do j = 1, 50000
+    cal: do i = 1, 50000
       dr_bar = 0
 
-      all_atom: do k = 1, natom
-        dr2(k) = sum((r(1:3,j,k) - r(1:3,j+2500,k))**2)
-        dr_bar = dr_bar + dr2(k)
+      all_atom: do j = 1, natom
+        dr2(j) = sum((r(1:3,i,j) - r(1:3,i+2500,j))**2)
+        dr_bar = dr_bar + dr2(j)
       enddo all_atom
 
       dr_bar = sqrt(dr_bar/float(natom))
@@ -50,13 +50,13 @@ program eudist
       
       write(20,"(f8.3)",advance="no") t*dt
       ! outputs displacement of all atoms:
-      ! do k = 1, natom
-      !   write(20,"(f10.6)",advance="no") dr2(k)
+      ! do j = 1, natom
+      !   write(20,"(f10.6)",advance="no") dr2(j)
       ! enddo
       write(20,"(f10.6)") dr_bar
     enddo cal
 
-    back: do j = 1, 2500
+    back: do i = 1, 2500
       backspace (10)
     enddo back
 
