@@ -5,15 +5,16 @@
 program rdf
   implicit none
   real, parameter :: dt = 0.002, box = 20, pi = 3.1415926
-  integer, parameter :: natom = 43, ngr = 300
+  integer, parameter :: natom = 43, nbin = 200
   logical :: iexist
-  integer :: nstep, istep, igr, tstart, tend, i, j, k
+  integer :: nstep, istep, igr, tstart, tend, i, j, k, l
   real(kind=8) :: rv(6,natom), rho
-  real(kind=8) :: dgr, dr(3), dist, rcut2, g(ngr), vgr
+  real(kind=8) :: dgr, dr(3), dist, rcut2, g(nbin), s(nbin), vgr
 
   rho = float(natom) / (0.5*box)**3
-  dgr =  0.5 * box / ngr
+  dgr =  0.5 * box / nbin
   g = 0
+  s = 0
   rcut2 = (box/2) ** 2
 
   inquire(file="md.out",exist=iexist)
@@ -42,11 +43,13 @@ program rdf
     stop
   endif
   
-  nstep = int((tend-tstart)/dt)
+  nstep = int(tstart/dt)
 
-  skip: do i = 2, floor(tstart/dt)
+  skip: do i = 2, nstep
     read(10)
   enddo skip
+  
+  nstep = int((tend-tstart)/dt)
 
   do i = 1, nstep
     read(10) istep, rv
@@ -70,13 +73,14 @@ program rdf
     enddo atom1
   enddo
 
+  s = s / float(nstep * natom)
   ! Attention !
   ! To cluster, density-based correction couldn't be made 
   ! due its irregular shape.
-  do i = 1, ngr
+  do i = 1, nbin
     vgr = (4 * pi) / 3. * ((i+1)**3 - i**3) * dgr**3
-    g(i) = g(i) / (natom * nstep * vgr * rho)
-    write(20,"(2(f10.6))") (i-0.5)*dgr, g(i)
+    g(i) = g(i) / (natom * nstep * vgr)! * rho)
+    write(20,"(f8.6,f10.6)") (i-1)*dgr, g(i)
   enddo
 
 end program rdf
