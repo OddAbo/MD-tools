@@ -47,4 +47,13 @@ Ends at time(ps):
 ```
 
 ---
+## [sisf.f90](https://github.com/OddAbo/MD-tools/blob/master/sisf.f90)
+
+**PBC** hasn't been added into code
+```
+set log x 10
+plot 'sisf.dat' u 1:2 w l        # self-intermediate scattering function
+```
+
+---
 To be continue...
