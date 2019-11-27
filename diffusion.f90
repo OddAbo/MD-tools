@@ -41,7 +41,7 @@ program diffusion
   dos = 0
   omega = 0
   iend = 0
-  d_omega = 20 * PI / 2500.
+  d_omega = 24 * PI / 2500.
   
   loop: do while (.true.)
     read(10,iostat=iend) istep, rv
@@ -77,13 +77,14 @@ program diffusion
     do j = 1, 2500
       t = j * dt
       omega(i) = omega(i) + &
-      2 * vac(j) * exp(-(t/tau)**2) * cos(i*d_omega*t) * dt
+      &2 * vac(j) * exp(-(t/tau)**2) * cos((i-1)*d_omega*t) * dt
+      !&2 * vac(j) * cos((i-1)*d_omega*t) * dt
     enddo
   enddo
 
   do i = 1, 2500
     write(20,"(3(f8.3,f12.8))") &
-    (i-1)*0.002, msd(i), (i-1)*0.002, vac(i), i*d_omega/PI/2., omega(i)
+    (i-1)*0.002, msd(i), (i-1)*0.002, vac(i), (i-1)*d_omega/PI/2., omega(i)
   enddo
 
 end program diffusion
