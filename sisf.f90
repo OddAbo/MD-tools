@@ -21,15 +21,15 @@ program sisf
     stop "Error: ""md.out"" doesn't exist!"
   endif
 
-  ! inquire(file="vhcf.dat",exist=iexist)
-  ! if(iexist) then
-  !   stop "Error: ""vhcf.dat"" already exists!&
-  !   & Rename or remove it before running this program again."
-  !   stop
-  ! endif
+  inquire(file="sisf.dat",exist=iexist)
+  if(iexist) then
+    stop "Error: ""sisf.dat"" already exists!&
+    & Rename or remove it before running this program again."
+    stop
+  endif
 
   open(10,file="md.out",form="unformatted",status="old")
-  open(20,file="sisf.dat", form="formatted",status="unknown")
+  open(20,file="sisf.dat", form="formatted",status="new")
   rewind(10)
   rewind(20)
   write(20,*) "t      Fs(q,t)"
@@ -43,6 +43,7 @@ program sisf
     fs = 0
     
     do iatom = 1, natom
+      ! TODO: periodic boundary condition
       dist = sum((rv_new(1:3,iatom)-rv_0(1:3,iatom))**2)
       dist = sqrt(dist)
       fs = fs + cos(qmax*dist)
