@@ -8,12 +8,12 @@ program sisf
   implicit none
   logical :: iexist
   real, parameter :: pi = 3.14159265, dt = 0.002
-  real, parameter :: rmax = 10, dr = 0.1
-  integer, parameter :: natom = 43, nstep = 1000000
-  integer :: iend, istep, i, j
+  integer, parameter :: natom = 43
+  integer :: iend, istep, iatom
   real(kind=8) :: rv_0(6,natom), rv_new(6,natom), qmax
   real(kind=8) :: fs, dist
   
+  ! 2.7 is the radius of the first peak in rdf
   qmax = 2 * pi / 2.7
 
   inquire(file="md.out",exist=iexist)
@@ -35,20 +35,20 @@ program sisf
   write(20,*) "t      Fs(q,t)"
   
   read(10) istep, rv_0
-  ! rewind(10)
+  rewind(10)
 
-  loop: do i = 1, nstep
+  loop: do while (.true.)
     read(10,iostat=iend) istep, rv_new
     if(is_iostat_end(iend)) exit loop
     fs = 0
     
-    do j = 1, natom
-      dist = sum((rv_new(1:3,j)-rv_0(1:3,j))**2)
+    do iatom = 1, natom
+      dist = sum((rv_new(1:3,iatom)-rv_0(1:3,iatom))**2)
       dist = sqrt(dist)
       fs = fs + cos(qmax*dist)
     enddo
     fs = fs / float(natom)
-    write(20,"(2f10.6)") (i-1)*dt, fs
+    write(20,"(2f10.6)") (istep-1)*dt, fs
     if (fs < 0) exit loop
   enddo loop
 
