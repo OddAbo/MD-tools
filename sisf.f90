@@ -32,7 +32,7 @@ program sisf
   open(20,file="sisf.dat", form="formatted",status="unknown")
   rewind(10)
   rewind(20)
-  write(20,*) "t      r      Gs(r,t)"
+  write(20,*) "t      Fs(q,t)"
   
   read(10) istep, rv_0
   ! rewind(10)
