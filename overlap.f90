@@ -8,7 +8,7 @@
 
 program overlap
   implicit none
-  integer, parameter :: natom = 43, nblock = 100
+  integer, parameter :: natom = 43, nblock = 250
   real, parameter :: dt = 0.002
   logical :: iexist
   integer :: istep, iread, i, j, t, q1, q2
